@@ -5,7 +5,7 @@ class Meme:
     """ Meme class """
     def __init__(self, id, url):
         self.datetime = datetime.datetime.now().isoformat()
-        self.id = id
+        self.id = str(id)
         self.url = url
         self.source = ""
         self.description = ""

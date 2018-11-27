@@ -1,3 +1,4 @@
 memes/
+__pycache__/
 raw_memes.dat
 memes.dat

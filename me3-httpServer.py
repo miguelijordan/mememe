@@ -15,8 +15,8 @@ import Meme
 import MemeDispatcher
 
 # CONSTANTS
-SERVER_ADDRESS = '127.0.0.1'
-SERVER_PORT = 8081
+SERVER_ADDRESS = '0.0.0.0'
+SERVER_PORT = 8888
 
 # Regex for API REST
 RE_GET_MEMEDATA = re.compile(r'/user/([^/]+)/meme')
@@ -51,7 +51,6 @@ class m3HTTPServer_RequestHandler(BaseHTTPRequestHandler):
 
                 return
             else:
-                try:
                 result = RE_GET_MEMEIMAGE.match(self.path)
                 if result is not None:
                     meme_id = result.group(1)
@@ -71,7 +70,7 @@ class m3HTTPServer_RequestHandler(BaseHTTPRequestHandler):
                     return
                 else:
                     return self.send_error(400)
-        except e:
+        except:
             logging.error('m3>Error processing GET request. \nPath: %s\nHeaders:\n%s\n', str(self.path), str(self.headers))
             logging.error(str(e))
             return self.send_response(500)
@@ -96,29 +95,27 @@ class m3HTTPServer_RequestHandler(BaseHTTPRequestHandler):
                     self.send_response(200)
                     self.end_headers()
                     return
-            except e:
+            except:
                 logging.error('m3>Error processing PUT request. \nPath: %s\nHeaders:\n%s\n', str(self.path), str(self.headers))
-                logging.error(str(e))
                 return self.send_response(500)
 
 def run():
     print('m3>Starting HTTP server at ' + SERVER_ADDRESS + ':' + str(SERVER_PORT) + '...')
-    LOG_INFO.info('m3>Starting HTTP server at ' + SERVER_ADDRESS + ':' + str(SERVER_PORT) + '...')
+    logging.info('m3>Starting HTTP server at ' + SERVER_ADDRESS + ':' + str(SERVER_PORT) + '...')
 
     try:
         server_address = (SERVER_ADDRESS, SERVER_PORT)
         httpd = HTTPServer(server_address, m3HTTPServer_RequestHandler)
 
         print('m3>Running HTTP server at ' + SERVER_ADDRESS + ':' + str(SERVER_PORT) + '...')
-        LOG_ERROR.error('m3>Running HTTP server at ' + SERVER_ADDRESS + ':' + str(SERVER_PORT) + '...')
+        logging.error('m3>Running HTTP server at ' + SERVER_ADDRESS + ':' + str(SERVER_PORT) + '...')
 
         httpd.serve_forever()
-    except e:
-        logging.error('m3>Error starting HTTP server at ' + SERVER_ADDRESS + ':' + SERVER_PORT + '...')
-        logging.error(str(e))
+    except:
+        logging.error('m3>Error starting HTTP server at ' + SERVER_ADDRESS + ':' + str(SERVER_PORT) + '...')
 
 if __name__ == '__main__':
-    logging.basicConfig(filename='info.log', filemode='w', level=logging.DEBUG, format=''%(asctime)s - %(name)s - %(levelname)s: %(message)s'',)
+    logging.basicConfig(filename='info.log', filemode='w', level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',)
     run()
     #from sys import argv
 

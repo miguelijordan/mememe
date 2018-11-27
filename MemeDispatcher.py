@@ -35,8 +35,8 @@ class MemeDispatcher:
 
 
 # Tests
-memes = load_memes()
-print(str(len(memes)))
-unique_memes = set(memes)
-print(str(len(unique_memes)))
+# memes = load_memes()
+# print(str(len(memes)))
+# unique_memes = set(memes)
+# print(str(len(unique_memes)))
 #memes.sort(key=lambda x : x.datetime)
