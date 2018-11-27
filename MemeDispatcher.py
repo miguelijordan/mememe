@@ -1,14 +1,14 @@
 import json
 import random
+import Meme
 
 # CONSTANTS
 MEMES_FILE = 'memes.dat'
 
 def load_memes():
-    return json.load(open(MEMES_FILE))
+    return json.load(open(MEMES_FILE), cls=Meme.MemeJSONDecoder)
 
 class MemeDispatcher:
-
     def __init__(self):
         self.memes = load_memes()
 
@@ -32,3 +32,11 @@ class MemeDispatcher:
 
     def putmemelike(self, user_id, meme_id, likeable):
         pass
+
+
+# Tests
+memes = load_memes()
+print(str(len(memes)))
+unique_memes = set(memes)
+print(str(len(unique_memes)))
+#memes.sort(key=lambda x : x.datetime)

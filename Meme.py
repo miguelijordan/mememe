@@ -18,21 +18,22 @@ class Meme:
             return self.id == other.id
         return False
 
+    def __hash__(self):
+        return hash(self.id)
+
 class MemeJSONEncoder(json.JSONEncoder):
+    """ Custom JSON Encoder for Meme class """
     def default(self, o):
         return o.__dict__
 
+class MemeJSONDecoder(json.JSONDecoder):
+    """ Custom JSON Decoder for Meme class """
+    def __init__(self):
+        json.JSONDecoder.__init__(self, object_hook=self.object_hook)
 
-    #def toJSON(self):
-    #    return json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
-
-
-# m = Meme("G:\My Drive\Programming\Python\me3\memes", "Cabronazi")
-# m2 = Meme("C:/meme2.jpg", "HumorLamentable")
-#
-# list = [m,m2]
-# print(list)
-#
-# json.dump(list, open('memes.dat', 'w'), cls=MemeJSONEncoder, sort_keys=True, indent=2)
-# print(open('memes.dat').read())
-# print(json.load(open('memes.dat')))
+    def object_hook(self, obj):
+        meme = Meme(obj['id'], obj['url'])
+        meme.datetime = obj['datetime']
+        meme.description = obj['description']
+        meme.source = obj['source']
+        return meme
