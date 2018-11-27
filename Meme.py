@@ -3,15 +3,20 @@ import json
 
 class Meme:
     """ Meme class """
-    def __init__(self, url, source):
+    def __init__(self, id, url):
         self.datetime = datetime.datetime.now().isoformat()
+        self.id = id
         self.url = url
-        self.source = source
+        self.source = ""
         self.description = ""
-        self.id = self.source + '_' + self.datetime
 
     def __repr__(self):
         return str(self.__dict__)
+
+    def __eq__(self, other):
+        if isinstance(other, Meme):
+            return self.id == other.id
+        return False
 
 class MemeJSONEncoder(json.JSONEncoder):
     def default(self, o):
