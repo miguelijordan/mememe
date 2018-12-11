@@ -1,25 +1,18 @@
-import datetime
+# -*- coding: utf-8 -*-
+"""This module manage the persistence of the memes."""
+
 import json
+from me3.core.meme import Meme
 
-class Meme:
-    """ Meme class """
-    def __init__(self, id, url):
-        self.datetime = datetime.datetime.now().isoformat()
-        self.id = str(id)
-        self.url = url
-        self.source = ""
-        self.description = ""
+def register_memes(memes, filename):
+    """Save the memes' metadata in a JSON file."""
+    json.dump(memes, open(filename, 'w+'), cls=MemeJSONEncoder, sort_keys=True, indent=2)
 
-    def __repr__(self):
-        return str(self.__dict__)
+def load_memes(filename):
+    return json.load(open(filename), cls=MemeJSONDecoder)
 
-    def __eq__(self, other):
-        if isinstance(other, Meme):
-            return self.id == other.id
-        return False
-
-    def __hash__(self):
-        return hash(self.id)
+def meme_to_json(meme):
+    return json.dumps(meme, cls=MemeJSONEncoder, sort_keys=True, indent=2)
 
 class MemeJSONEncoder(json.JSONEncoder):
     """ Custom JSON Encoder for Meme class """

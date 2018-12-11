@@ -1,11 +1,12 @@
 import urllib.request
 import re
-import json
-import Meme
+
+# m3 modules
+from me3.core.meme import Meme
+import me3.core.me3_id_generator as me3_id_generator
 
 # CONSTANTS
-MEMES_FILE = 'raw_memes.dat'
-MEME_FOLDER = 'memes/'
+MEME_FOLDER = 'StuffMemes/'
 
 USER_AGENT = 'Mozilla/5.0 (Windows NT 6.1; Win64; x64)'
 HEADERS = {'User-Agent': USER_AGENT}
@@ -42,7 +43,7 @@ def download_meme(url):
         req = urllib.request.Request(url, headers=HEADERS)
         image = urllib.request.urlopen(req).read()
 
-        meme_id = hash(image)
+        meme_id = me3_id_generator.generate_id(image)
         extension = [e for e in EXTENSIONS if e in url]
         if extension == []:
             return None
@@ -52,14 +53,10 @@ def download_meme(url):
         f.write(image)
         f.close()
 
-        meme = Meme.Meme(meme_id, meme_path)
+        meme = Meme(meme_id, meme_path)
         return meme
     except:
         return None
-
-def register_memes(memes):
-    """ Write the memes' metadata in a JSON file """
-    json.dump(memes, open(MEMES_FILE, 'w+'), cls=Meme.MemeJSONEncoder, sort_keys=True, indent=2)
 
 class MemeGetter:
     """ Generic Getter to obtain memes from Internet """

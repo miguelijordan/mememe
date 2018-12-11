@@ -1,7 +1,9 @@
-import MemeGetter
+import meme_getter
+import me3.core.me3_persistence as me3_persistence
 
 # CONSTANTS
-SOURCES_FILE = 'sources.dat'
+SOURCES_FILE = 'meme_sources.dat'
+MEMES_FILE = 'StuffMemes.dat'
 
 def get_sources():
     with open(SOURCES_FILE, 'r') as f:
@@ -13,10 +15,10 @@ if __name__ == '__main__':
     sources = filter(str.strip, sources)
 
     for s in sources:
-        mg = MemeGetter.MemeGetter(s)
+        mg = meme_getter.MemeGetter(s)
         memes = mg.downloadMemes()
         print(s + ': ' + str(len(memes)))
 
         all_memes += memes
 
-    MemeGetter.register_memes(all_memes)
+    me3_persistence.register_memes(all_memes, MEMES_FILE)

@@ -34,8 +34,32 @@ class MemeDispatcher:
         pass
 
 
-# Tests
-# memes = load_memes()
+def execution_time(stmt, ntimes):
+    import timeit
+    t = timeit.Timer(stmt=stmt, globals=globals())
+    res = t.repeat(repeat=ntimes, number=1)
+    return res
+
+def execution_time_ms(stmt, ntimes):
+    import statistics
+    res = execution_time(stmt, ntimes)
+    print("Code: " + stmt)
+    print("Mean: " + str(statistics.mean(res) * 1e+3))
+    print("Standard deviation: " + str(statistics.stdev(res) * 1e+3))
+    print("Median: " + str(statistics.median(res) * 1e+3))
+
+
+execution_time_ms("1+1", 1000)
+
+memes = load_memes()
+m = memes[0]
+f = open(m.url, 'rb')
+data = f.read()
+f.close()
+
+print(str(len(data)) + ' bytes.')
+print(str(len(data)/1024) + ' kb.')
+
 # print(str(len(memes)))
 # unique_memes = set(memes)
 # print(str(len(unique_memes)))

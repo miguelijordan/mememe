@@ -9,10 +9,8 @@ Usage::
 
 from http.server import BaseHTTPRequestHandler, HTTPServer
 import logging
-import json
 import re
-import Meme
-import MemeDispatcher
+import meme_dispatcher
 
 # CONSTANTS
 SERVER_ADDRESS = '0.0.0.0'
@@ -23,13 +21,10 @@ RE_GET_MEMEDATA = re.compile(r'/user/([^/]+)/meme')
 RE_GET_MEMEIMAGE = re.compile(r'/meme/([^/]+)')
 RE_PUT_MEMELIKE = re.compile(r'/user/([^/]+)/meme/([^/]+)/([like|dislike])')
 
-# MEME DE PRUEBA
-MEME_PRUEBA = Meme.Meme("G:\My Drive\Programming\Python\me3\memes\drenaje.png", "Cabronazi")
-
-meme_dispatcher = MemeDispatcher.MemeDispatcher()
+meme_dispatcher = meme_dispatcher.MemeDispatcher()
 
 # HTTPRequestHandler class
-class m3HTTPServer_RequestHandler(BaseHTTPRequestHandler):
+class Me3HTTPRequestHandler(BaseHTTPRequestHandler):
 
     # GET
     def do_GET(self):
@@ -72,7 +67,6 @@ class m3HTTPServer_RequestHandler(BaseHTTPRequestHandler):
                     return self.send_error(400)
         except:
             logging.error('m3>Error processing GET request. \nPath: %s\nHeaders:\n%s\n', str(self.path), str(self.headers))
-            logging.error(str(e))
             return self.send_response(500)
 
             #logging.info("Requestline:\n%s\nSize (b): %i\n", str(self.requestline), sys.getsizeof(self.requestline))
@@ -105,7 +99,7 @@ def run():
 
     try:
         server_address = (SERVER_ADDRESS, SERVER_PORT)
-        httpd = HTTPServer(server_address, m3HTTPServer_RequestHandler)
+        httpd = HTTPServer(server_address, Me3HTTPRequestHandler)
 
         print('m3>Running HTTP server at ' + SERVER_ADDRESS + ':' + str(SERVER_PORT) + '...')
         logging.error('m3>Running HTTP server at ' + SERVER_ADDRESS + ':' + str(SERVER_PORT) + '...')
@@ -117,9 +111,3 @@ def run():
 if __name__ == '__main__':
     logging.basicConfig(filename='info.log', filemode='w', level=logging.DEBUG, format='%(asctime)s - %(name)s - %(levelname)s: %(message)s',)
     run()
-    #from sys import argv
-
-    #if len(argv) == 2:
-    #    run(port=int(argv[1]))
-    #else:
-    #    run()
