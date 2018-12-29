@@ -3,7 +3,7 @@ import meme_getter
 import me3.core.me3_persistence as me3_persistence
 import os
 
-TOKEN = "780550229:AAHU8uZnq8B6jmJ-vaapRlRX6KMPIdWf9uY"
+TOKEN = ""
 SOURCES_FILE = 'meme_sources.dat'
 SENT_MEMES = 'SentMemes.dat'
 
