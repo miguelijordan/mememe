@@ -66,10 +66,10 @@ class MemeGetter:
 
     def downloadMemes(self):
         images_url = get_images_url_from_webpage(self.source_url)
-        print(self.source_url + ' -> ' + str(len(images_url)))
+        #print(self.source_url + ' -> ' + str(len(images_url)))
         memes = []
         for i in images_url:
-            print(i)
+            #print(i)
             m = download_meme(i)
             if m is not None:
                 if not m in memes:

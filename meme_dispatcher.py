@@ -3,7 +3,9 @@ import random
 import me3.core.me3_persistence as me3_persistence
 
 # CONSTANTS
-MEMES_FILE = 'Memes.dat'
+MEMES_FILE = 'StuffMemes.dat'
+USERS_FILE = "Users.dat"
+
 
 class MemeDispatcher:
     def __init__(self):
